@@ -11,7 +11,7 @@ mongo:
   image: mongo
   expose:
     - "27017"
-volumes:
-  - ./data:/data/db
-ports:
+  volumes:
+  - /c/Users/Yoimer/Documents/development/docker-for-developers/backend/data:/data/db
+  ports:
   - "27017:27017"
