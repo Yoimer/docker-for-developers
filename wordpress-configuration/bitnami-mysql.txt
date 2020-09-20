@@ -1,0 +1,20 @@
+1. Create a folder c:\Users\[YourAccount]\MySQLData for MySQL data.
+2. Create a folder c:\Users\[YourAccount]\MySQLConf for a custom MySQL config file.
+3. Create a custom MySQL config file c:\Users\[YourAccount]\MySQLConf\my_custom.cnf and add two lines in it:
+[mysqld]
+innodb_use_native_aio=0
+
+4. Now create and run the container mounting your custom config and data folder to it:
+docker run -d --name mysql -e ALLOW_EMPTY_PASSWORD="yes" \
+-v //c/Users/[YourAccount]/MySQLData:/bitnami/mysql/data \
+-v //c/Users/[YourAccount]/MySQLConf/my_custom.cnf:/opt/bitnami/mysql/conf/my_custom.cnf:ro \ bitnami/mysql:latest
+
+// at home (take care of the // in -v command)
+docker run -it -d --name wordpressdb  -p 3306:3306 -e MYSQL_ROOT_PASSWORD=aqwe123 -e MYSQL_USER=wpuser -e MYSQL_PASSWORD=wpuser@ -e MYSQL_DATABASE=wordpress_db -v //c/Users/Yoimer/MySQLData:/bitnami/mysql/data -v //c/Users/Yoimer/MySQLConf/my_custom.cnf:/opt/bitnami/mysql/conf/my_custom.cnf:ro bitnami/mysql:latest
+
+
+// from mysql client on host (Ver 8.0.21 for Win64 on x86_64 - for MySQL 8.0.21 (MySQL Community Server (GPL)))
+
+mysql -uwpuser -pwpuser@ -h docker-machine ip -P3306 --sql
+
+mysql -uwpuser -pwpuser@ -h 192.168.99.112 -P3306 --sql 
